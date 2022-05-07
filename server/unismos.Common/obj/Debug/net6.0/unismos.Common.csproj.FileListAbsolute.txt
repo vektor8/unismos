@@ -1,0 +1,12 @@
+/home/vmosolea/personal/school/3.2/SD/unismos/server/unismos.Common/bin/Debug/net6.0/unismos.Common.deps.json
+/home/vmosolea/personal/school/3.2/SD/unismos/server/unismos.Common/bin/Debug/net6.0/unismos.Common.dll
+/home/vmosolea/personal/school/3.2/SD/unismos/server/unismos.Common/bin/Debug/net6.0/unismos.Common.pdb
+/home/vmosolea/personal/school/3.2/SD/unismos/server/unismos.Common/obj/Debug/net6.0/unismos.Common.csproj.AssemblyReference.cache
+/home/vmosolea/personal/school/3.2/SD/unismos/server/unismos.Common/obj/Debug/net6.0/unismos.Common.GeneratedMSBuildEditorConfig.editorconfig
+/home/vmosolea/personal/school/3.2/SD/unismos/server/unismos.Common/obj/Debug/net6.0/unismos.Common.AssemblyInfoInputs.cache
+/home/vmosolea/personal/school/3.2/SD/unismos/server/unismos.Common/obj/Debug/net6.0/unismos.Common.AssemblyInfo.cs
+/home/vmosolea/personal/school/3.2/SD/unismos/server/unismos.Common/obj/Debug/net6.0/unismos.Common.csproj.CoreCompileInputs.cache
+/home/vmosolea/personal/school/3.2/SD/unismos/server/unismos.Common/obj/Debug/net6.0/unismos.Common.dll
+/home/vmosolea/personal/school/3.2/SD/unismos/server/unismos.Common/obj/Debug/net6.0/refint/unismos.Common.dll
+/home/vmosolea/personal/school/3.2/SD/unismos/server/unismos.Common/obj/Debug/net6.0/unismos.Common.pdb
+/home/vmosolea/personal/school/3.2/SD/unismos/server/unismos.Common/obj/Debug/net6.0/ref/unismos.Common.dll

@@ -1,0 +1,61 @@
+{
+  "format": 1,
+  "restore": {
+    "/home/vmosolea/personal/school/3.2/SD/unismos/server/unismos.Common/unismos.Common.csproj": {}
+  },
+  "projects": {
+    "/home/vmosolea/personal/school/3.2/SD/unismos/server/unismos.Common/unismos.Common.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/home/vmosolea/personal/school/3.2/SD/unismos/server/unismos.Common/unismos.Common.csproj",
+        "projectName": "unismos.Common",
+        "projectPath": "/home/vmosolea/personal/school/3.2/SD/unismos/server/unismos.Common/unismos.Common.csproj",
+        "packagesPath": "/home/vmosolea/.nuget/packages/",
+        "outputPath": "/home/vmosolea/personal/school/3.2/SD/unismos/server/unismos.Common/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/vmosolea/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "/home/vmosolea/personal": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/6.0.202/RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

@@ -6,6 +6,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "unismos.Data", "unismos.Dat
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "unismos.Common", "unismos.Common\unismos.Common.csproj", "{773CDFC8-9987-47EA-B8B7-F565323FE46B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "unismos.Interfaces", "unismos.Interfaces\unismos.Interfaces.csproj", "{2A0A1318-EAE3-450B-8592-01D11838A4D4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "unismos.Services", "unismos.Services\unismos.Services.csproj", "{5D7A8C16-C678-4073-BF32-0DEA503470E4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +28,13 @@ Global
 		{773CDFC8-9987-47EA-B8B7-F565323FE46B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{773CDFC8-9987-47EA-B8B7-F565323FE46B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{773CDFC8-9987-47EA-B8B7-F565323FE46B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2A0A1318-EAE3-450B-8592-01D11838A4D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2A0A1318-EAE3-450B-8592-01D11838A4D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2A0A1318-EAE3-450B-8592-01D11838A4D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2A0A1318-EAE3-450B-8592-01D11838A4D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5D7A8C16-C678-4073-BF32-0DEA503470E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D7A8C16-C678-4073-BF32-0DEA503470E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D7A8C16-C678-4073-BF32-0DEA503470E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D7A8C16-C678-4073-BF32-0DEA503470E4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

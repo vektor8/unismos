@@ -18,6 +18,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\unismos.Common\unismos.Common.csproj" />
+      <ProjectReference Include="..\unismos.Interfaces\unismos.Interfaces.csproj" />
     </ItemGroup>
 
 </Project>

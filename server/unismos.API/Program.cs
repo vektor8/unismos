@@ -1,7 +1,13 @@
-using Microsoft.EntityFrameworkCore;
-using unismos.Data;
+using unismos.API.MiddlewareExtensions;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
+
+Log.Logger = new LoggerConfiguration()
+    .MinimumLevel.Debug()
+    .WriteTo.Console()
+    .WriteTo.File("logs/myapp.txt", rollingInterval: RollingInterval.Day)
+    .CreateLogger();
 
 // Add services to the container.
 
@@ -11,6 +17,10 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.DbOptions(builder.Configuration);
+builder.Services.InjectRepositories(builder.Configuration);
+builder.Services.InjectServices(builder.Configuration);
+
+
 
 var app = builder.Build();
 

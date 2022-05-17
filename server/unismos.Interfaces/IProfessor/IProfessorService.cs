@@ -1,4 +1,5 @@
 using unismos.Common.Dtos;
+using unismos.Common.Dtos.Professor;
 using unismos.Common.Entities;
 
 namespace unismos.Interfaces.IProfessor;

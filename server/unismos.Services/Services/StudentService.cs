@@ -29,7 +29,7 @@ public class StudentService : IStudentService
             FirstName = dto.FirstName,
             LastName = dto.LastName,
             Enrollments = new List<Enrollment>(),
-            Password = dto.Password,
+            Password = BCrypt.Net.BCrypt.HashPassword(dto.Password),
             TaxesPaid = new List<Tax>(),
             Username = dto.Username
         };

@@ -1,3 +1,5 @@
+using unismos.Common.Dtos.Professor;
+
 namespace unismos.Common.Dtos;
 
 public class TeachingDto

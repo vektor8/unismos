@@ -16,8 +16,6 @@ public class UserRepository: IUserRepository
     public async Task<User> GetByIdAsync(Guid id)
     {
         var user = await _context.Users
-                       .Include(student => ((student as Student)!).TaxesPaid)
-                       .Include(student => ((student as Student)!).Enrollments)
                        .FirstOrDefaultAsync(e => e.Id == id) ?? new NullUser();
         return user;
     }
@@ -25,8 +23,6 @@ public class UserRepository: IUserRepository
     public async Task<User> GetByUsername(string username)
     {
         var user = await _context.Users
-            .Include(student => ((student as Student)!).TaxesPaid)
-            .Include(student => ((student as Student)!).Enrollments)
             .FirstOrDefaultAsync(e => e.Username == username) ?? new NullUser();
         return user;
     }

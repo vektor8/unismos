@@ -1,4 +1,5 @@
 using unismos.Common.Dtos;
+using unismos.Common.Dtos.Professor;
 using unismos.Common.Entities;
 using unismos.Common.ViewModels;
 using unismos.Common.ViewModels.Professor;

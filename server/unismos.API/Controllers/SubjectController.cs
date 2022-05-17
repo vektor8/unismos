@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;
 using unismos.Common.Extensions;
@@ -6,6 +7,7 @@ using unismos.Interfaces.ISubject;
 
 namespace unismos.API.Controllers;
 
+[Authorize]
 [ApiController]
 [Route("/api/subjects")]
 public class SubjectController : ControllerBase
@@ -24,9 +26,12 @@ public class SubjectController : ControllerBase
         return subject is NullSubjectViewModel ? BadRequest() : Created("", subject);
     }
 
+    // [Authorize]
     [HttpGet]
     public async Task<IActionResult> GetAllAsync()
     {
+        var currentUser = HttpContext.User;
+        Console.WriteLine(currentUser.Claims);
         Log.Information("Hello, Serilog!");
         var subjects = await _subjectService.GetAllAsync();
         return Ok(subjects.Select(e => e.ToViewModel()).ToList());

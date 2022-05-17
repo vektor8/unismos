@@ -1,4 +1,5 @@
 using unismos.Common.Dtos;
+using unismos.Common.Dtos.Professor;
 using unismos.Common.Entities;
 using unismos.Common.Extensions;
 using unismos.Data;
@@ -30,7 +31,7 @@ public class ProfessorService : IProfessorService
             Id = new Guid(),
             FirstName = dto.FirstName,
             LastName = dto.LastName,
-            Password = dto.Password,
+            Password = BCrypt.Net.BCrypt.HashPassword(dto.Password),
             Username = dto.Username,
             Teachings = new List<Teaching>()
         };

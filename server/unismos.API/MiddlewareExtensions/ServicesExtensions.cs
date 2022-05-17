@@ -19,7 +19,9 @@ public static class ServicesExtensions
     {
         services
             .AddDbContext<DataContext>(opt =>
-                opt.UseNpgsql(configuration.GetConnectionString("constr")));
+            {
+                opt.UseNpgsql(configuration.GetConnectionString("constr"));
+            });
 
         using var scope = services.BuildServiceProvider().CreateScope();
         var dbContext = scope.ServiceProvider.GetRequiredService<DataContext>();

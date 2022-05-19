@@ -1,5 +1,3 @@
-import { Order } from "./order"
-import { Restaurant } from "./restaurant"
 
 export interface User {
     id: string,
@@ -8,12 +6,4 @@ export interface User {
     lastName:string,
     token: string,
     type: string,
-}
-
-export interface Admin extends User{
-    restaurants: [Restaurant]
-}
-
-export interface Customer extends User{
-    orders : [Order]
 }

@@ -41,9 +41,9 @@ public class EnrollmentController : ControllerBase
 
     [HttpPut]
     [Route("grade/{id}")]
-    public async Task<IActionResult> GradeEnrollment([FromRoute] Guid id, [FromBody] int grade)
+    public async Task<IActionResult> GradeEnrollment([FromRoute] Guid id, [FromBody] GradeViewModel model)
     {
-        var enrollment = (await _enrollmentService.GradeAsync(id, grade)).ToViewModel();
+        var enrollment = (await _enrollmentService.GradeAsync(id, model.Grade )).ToViewModel();
         return enrollment is NullEnrollmentViewModel ? BadRequest() : Ok(enrollment);
     }
 
@@ -59,4 +59,9 @@ public class EnrollmentController : ControllerBase
 public class ReviewViewModel
 {
     public string Review { get; set; }
+}
+
+public class GradeViewModel
+{
+    public int Grade { get; set; }
 }

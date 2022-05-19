@@ -6,10 +6,13 @@ import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import { StudentReducer } from "./student/slice";
 import { StudentState } from "./student/state";
+import { ProfessorState } from "./professor/state";
+import { ProfessorReducer } from "./professor/slice";
 
 export interface RootState {
   user: UserState;
   student: StudentState;
+  professor: ProfessorState
 }
 
 const userPersistConfig = {
@@ -22,10 +25,16 @@ const studentPersistConfig = {
   storage,
 };
 
+const professorPersistConfig = {
+  key: 'professor',
+  storage
+};
+
 const store = configureStore({
   reducer: combineReducers<RootState>({
     user: persistReducer(userPersistConfig, UserReducer as Reducer),
     student: persistReducer(studentPersistConfig, StudentReducer as Reducer),
+    professor: persistReducer(professorPersistConfig, ProfessorReducer as Reducer)
   }),
   middleware: [thunk],
 });

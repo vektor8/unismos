@@ -5,9 +5,7 @@ import MuiDrawer from '@mui/material/Drawer';
 import Box from '@mui/material/Box';
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
-import List from '@mui/material/List';
 import Typography from '@mui/material/Typography';
-import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
@@ -19,14 +17,11 @@ import { User } from '../../../model/user';
 import { logout } from '../../../stores/user/slice';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { Axios } from '../../../api/api';
-import { Enrollment } from '../../../model/teaching';
-import Enrollments from '../components/Enrollments';
-import GPA from '../components/GPA';
+import { Teaching } from '../../../model/teaching';
 import ExamSchedule from '../components/Schedule';
-import { Alert, ListItemButton, ListItemIcon, ListItemText, Snackbar } from '@mui/material';
-import DashboardIcon from '@mui/icons-material/Dashboard';
-import EnrollmentModal from '../components/EnrollmentModal';
-import { refreshEnrollments } from '../../../stores/student/slice';
+import EnrollmentModal from '../components/ReviewModal';
+import { refreshTeachings } from '../../../stores/professor/slice';
+import Teachings from '../components/Teachings';
 
 function Copyright(props: any) {
   return (
@@ -106,25 +101,20 @@ const theme = createTheme({
 function DashboardContent() {
   const [openModal, setOpenModal] = React.useState(false);
   const user: User = useSelector<RootState>(state => state.user.userData) as User;
-  const enrollments: Enrollment[] = useSelector<RootState>(state => state.student.enrollments) as Enrollment[];
-  const gradedEnrollments = enrollments.filter(enrollment => enrollment.grade > 0);
-  const upcomingExams = enrollments.map(e => e.teaching).filter(e => e.examDate * 1000 > Date.now());
+  const teachings: Teaching[] = useSelector<RootState>(state => state.professor.teaching) as Teaching[];
+  // const gradedEnrollments = enrollments.filter(enrollment => enrollment.grade > 0);
+  const upcomingExams = teachings.filter(e => e.examDate * 1000 > Date.now());
   const dispatch = useDispatch();
 
   React.useEffect(() => {
-    Axios.get(`/enrollments/student/${user.id}`).then(res => {
-      dispatch(refreshEnrollments(res.data));
-      console.log(res.data)
-      console.log(enrollments)
+    Axios.get(`/teachings/professor/${user.id}`).then(res => {
+      dispatch(refreshTeachings(res.data));
+      console.log(res.data);
     });
   }, []);
 
   return (
     <ThemeProvider theme={theme}>
-      <EnrollmentModal
-        isOpen={openModal}
-        onClose={() => setOpenModal(false)}
-      />
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
         <AppBar>
@@ -144,27 +134,6 @@ function DashboardContent() {
             </IconButton>
           </Toolbar>
         </AppBar>
-        <Drawer variant="permanent" open={true}>
-          <Toolbar
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'flex-end',
-              px: [1],
-            }}
-          >
-          </Toolbar>
-          <Divider />
-          <List component="nav">
-            <ListItemButton onClick={() => setOpenModal(true)}>
-              <ListItemIcon>
-                <DashboardIcon />
-              </ListItemIcon>
-              <ListItemText primary="Enroll into class" />
-            </ListItemButton>
-            <Divider sx={{ my: 1 }} />
-          </List>
-        </Drawer>
         <Box
           component="main"
           sx={{
@@ -191,20 +160,9 @@ function DashboardContent() {
                   <ExamSchedule teachings={upcomingExams} />
                 </Paper>
               </Grid>
-              <Grid item xs={12} md={4} lg={3}>
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: 'flex',
-                    flexDirection: 'column',
-                  }}
-                >
-                  <GPA gpa={gradedEnrollments.reduce((a, b) => a + b.grade, 0) / gradedEnrollments.length || 0} />
-                </Paper>
-              </Grid>
               <Grid item xs={12}>
                 <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-                  <Enrollments enrollments={enrollments} />
+                  <Teachings teachings={teachings} />
                 </Paper>
               </Grid>
             </Grid>
@@ -216,7 +174,7 @@ function DashboardContent() {
   );
 }
 
-export default function StudentDashboardScreen() {
+export default function ProfessorDashboardScreen() {
   return <DashboardContent />;
 }
 

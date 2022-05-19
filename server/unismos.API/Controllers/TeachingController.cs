@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using unismos.Common.Extensions;
 using unismos.Common.ViewModels;
@@ -5,6 +6,7 @@ using unismos.Interfaces.ITeaching;
 
 namespace unismos.API.Controllers;
 
+[Authorize]
 [ApiController]
 [Route("/api/teachings")]
 public class TeachingController : ControllerBase
@@ -50,11 +52,17 @@ public class TeachingController : ControllerBase
         return Ok(teachings);
     }
 
+    [Authorize(Roles="secretary")]
     [HttpPut]
     [Route("{id}")]
-    public async Task<IActionResult> ScheduleExam([FromRoute] Guid id, [FromBody] long examDate)
+    public async Task<IActionResult> ScheduleExam([FromRoute] Guid id, [FromBody] UpdateTeachingViewModel model)
     {
-        var teaching = (await _teachingService.ScheduleExam(id, examDate)).ToViewModel();
+        var teaching = (await _teachingService.ScheduleExam(id, model.examDate)).ToViewModel();
         return teaching is NullTeachingViewModel ? BadRequest() : Ok(teaching);
     }
+}
+
+public class UpdateTeachingViewModel
+{
+    public long examDate { get; set; }
 }

@@ -1,3 +1,4 @@
+using Serilog;
 using unismos.Common.Dtos;
 using unismos.Common.Entities;
 using unismos.Common.Extensions;
@@ -14,6 +15,11 @@ public class SubjectService : ISubjectService
         _subjectRepository = subjectRepository;
     }
 
+    /// <summary>
+    /// add new subject
+    /// </summary>
+    /// <param name="dto"></param>
+    /// <returns></returns>
     public async Task<SubjectDto> AddAsync(NewSubjectDto dto)
     {
         var entity = new Subject
@@ -26,9 +32,14 @@ public class SubjectService : ISubjectService
         return response.ToDto();
     }
 
+    /// <summary>
+    /// get all subjects
+    /// </summary>
+    /// <returns></returns>
     public async Task<List<SubjectDto>> GetAllAsync()
     {
         var subjects = await _subjectRepository.GetAllAsync();
+        Log.Information("Getting all subjects");
         return subjects.Select(e => e.ToDto()).ToList();
     }
 }

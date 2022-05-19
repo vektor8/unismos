@@ -16,8 +16,8 @@ function AuthenticationSwitch(props: any) {
       return to ?? <Navigate to="/student-dashboard" />;
     case 'professor':
       return to ?? <Navigate to="/professor-dashboard" />;
-    // case 'secretary':
-    //   return to ?? <Navigate to="/secretary-dashboard" />;
+    case 'secretary':
+      return to ?? <Navigate to="/secretary-dashboard" />;
     default:
       return redirect ?? <Navigate to={redirect} />;
   }

@@ -1,8 +1,8 @@
+using Serilog;
 using unismos.Common.Dtos;
 using unismos.Common.Dtos.Professor;
 using unismos.Common.Entities;
 using unismos.Common.Extensions;
-using unismos.Data;
 using unismos.Interfaces.IProfessor;
 using unismos.Interfaces.IUser;
 
@@ -12,19 +12,26 @@ public class ProfessorService : IProfessorService
 {
     private readonly IUserRepository _userRepository;
     private readonly IProfessorRepository _professorRepository;
-    private readonly DataContext _context; 
 
-    public ProfessorService(IUserRepository userRepository, IProfessorRepository professorRepository, DataContext context)
+    public ProfessorService(IUserRepository userRepository, IProfessorRepository professorRepository)
     {
         _userRepository = userRepository;
         _professorRepository = professorRepository;
-        _context = context;
     }
-
+    
+    /// <summary>
+    /// validate username and add prof
+    /// </summary>
+    /// <param name="dto"></param>
+    /// <returns></returns>
     public async Task<ProfessorDto> AddAsync(NewProfessorDto dto)
     {
         var user = await _userRepository.GetByUsername(dto.Username);
-        if (user is not NullUser) return new NullProfessorDto();
+        if (user is not NullUser)
+        {
+            Log.Error("Username taken");
+            return new NullProfessorDto();
+        }
         
         var entity = new Professor
         {
@@ -40,36 +47,27 @@ public class ProfessorService : IProfessorService
         return response.ToDto();
     }
 
+    /// <summary>
+    /// get prof by id
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     public async Task<ProfessorDto> GetByIdAsync(Guid id)
     {
         var entity = await _professorRepository.GetByIdAsync(id);
         var result = entity.ToDto();
-        // result.Teachings = _context.Teachings.Where(e => e.Professor.Id == entity.Id).Select(e =>
-        //     new ProfessorTeachingDto
-        //     {
-        //         Id = e.Id,
-        //         ExamDate = e.ExamDate,
-        //         Subject = e.Subject.ToDto(),
-        //         Enrollments = _context.Enrollments.Where(f => f.Teaching.Id == e.Id).Select(f =>
-        //             new ProfessorEnrollmentDto
-        //             {
-        //                 Id = f.Id,
-        //                 Grade = f.Grade,
-        //                 Review = f.Review,
-        //                 Student = new EnrollmentStudentDto
-        //                 {
-        //                     FirstName = f.Student.FirstName,
-        //                     LastName = f.Student.LastName,
-        //                     Id = f.Student.Id
-        //                 }
-        //             }).ToList()
-        //     }).ToList();
+        Log.Information("Getting professor with id {id}", id);
         return result;
     }
 
+    /// <summary>
+    /// get all profs from db
+    /// </summary>
+    /// <returns></returns>
     public async Task<List<ProfessorDto>> GetAllAsync()
-    {  
+    {
         var professors = (await _professorRepository.GetAllAsync()).Select(e => e.ToDto()).ToList();
+        Log.Information("Getting all professors");
         return professors;
     }
 }

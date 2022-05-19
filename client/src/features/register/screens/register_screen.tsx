@@ -53,7 +53,6 @@ export default function RegisterScreen() {
       firstName: data.get('firstName'),
       lastName: data.get('lastName'),
     }).then((response) => {
-      navigate("/login");
     }).catch((err) => setOpenSnackBarFail(true));
   };
 
@@ -61,7 +60,7 @@ export default function RegisterScreen() {
     <ThemeProvider theme={theme}>
       <Snackbar open={openSnackBarFail} autoHideDuration={5000} onClose={() => setOpenSnackBarFail(false)}>
         <Alert onClose={() => setOpenSnackBarFail(false)} severity="error" sx={{ width: '100%' }}>
-          Email taken or password too short
+          Username taken or password too short
         </Alert>
       </Snackbar>
       <Container component="main" maxWidth="xs">

@@ -13,6 +13,8 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Axios } from '../../../api/api';
 import { useDispatch } from 'react-redux';
 import { login } from '../../../stores/user/slice';
+import { Alert, Snackbar } from '@mui/material';
+
 
 function Copyright(props: any) {
   return (
@@ -40,6 +42,7 @@ const theme = createTheme({
 });
 
 export default function SignInSide() {
+  const [openSnackBarFail, setOpenSnackBarFail] = React.useState(false);
   const dispatch = useDispatch();
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -50,12 +53,17 @@ export default function SignInSide() {
     }).then((response) => {
       dispatch(login(response.data));
       localStorage.setItem('access_token', response.data.token);
-    });
+    }).catch((err) => setOpenSnackBarFail(true));
   };
 
 
   return (
     <ThemeProvider theme={theme}>
+      <Snackbar open={openSnackBarFail} autoHideDuration={5000} onClose={() => setOpenSnackBarFail(false)}>
+        <Alert onClose={() => setOpenSnackBarFail(false)} severity="error" sx={{ width: '100%' }}>
+          Invalid credentials
+        </Alert>
+      </Snackbar>
       <Grid container component="main" sx={{ height: '100vh' }}>
         <CssBaseline />
         <Grid
@@ -121,9 +129,9 @@ export default function SignInSide() {
                 <Grid item xs>
                 </Grid>
                 <Grid item>
-                <Link href="/register" variant="body2">
-                  {"Don't have an account? Sign Up"}
-                </Link>
+                  <Link href="/register" variant="body2">
+                    {"Don't have an account? Sign Up"}
+                  </Link>
                 </Grid>
               </Grid>
               <Copyright sx={{ mt: 5 }} />

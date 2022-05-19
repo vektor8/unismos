@@ -3,6 +3,7 @@ using System.Security.Claims;
 using System.Text;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using Serilog;
 using unismos.Common.Dtos;
 using unismos.Common.Entities;
 using unismos.Common.Extensions;
@@ -21,6 +22,11 @@ public class UserService : IUserService
         _configuration = configuration;
     }
 
+    /// <summary>
+    /// get userById
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     public async Task<UserDto> GetByIdAsync(Guid id)
     {
         var user = await _userRepository.GetByIdAsync(id);
@@ -37,16 +43,29 @@ public class UserService : IUserService
         return new NullUserDto();
     }
 
+    /// <summary>
+    /// verify credentials and return user data with jwt
+    /// </summary>
+    /// <param name="dto"></param>
+    /// <returns></returns>
     public async Task<LoggedInUserDto> Authenticate(LoginUserDto dto)
     {
         var user = await _userRepository.GetByUsername(dto.Username);
 
-        if (user is NullUser) return new NullLoggedInUserDto();
+        if (user is NullUser)
+        {
+            Log.Error("Nonexisting user");
+            return new NullLoggedInUserDto();
+        }
 
-        if (BCrypt.Net.BCrypt.Verify(dto.Password, user.Password) == false) return new NullLoggedInUserDto();
+        if (BCrypt.Net.BCrypt.Verify(dto.Password, user.Password) == false)
+        {
+            Log.Error("Incorrect password");
+            return new NullLoggedInUserDto();
+        }
 
         var userDto = user.ToDto();
-        
+
         return new LoggedInUserDto
         {
             Id = userDto.Id,
@@ -57,9 +76,16 @@ public class UserService : IUserService
             Type = userDto.GetType().Name.ToLower()[..^3]
         };
     }
-    
+
+
+    /// <summary>
+    /// generate jwt for given user
+    /// </summary>
+    /// <param name="user"></param>
+    /// <returns></returns>
     private async Task<string> GenerateJwtToken(UserDto user)
     {
+        Log.Information("Generating jwt for {name}", user.Username);
         var claims = new[]
         {
             new Claim(JwtRegisteredClaimNames.Sub, user.Username),

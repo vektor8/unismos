@@ -1,0 +1,148 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>unismos.Services</name>
+    </assembly>
+    <members>
+        <member name="M:unismos.Services.Services.EnrollmentService.AddAsync(unismos.Common.Dtos.NewEnrollmentDto)">
+            <summary>
+            add a new enrollment based on a given student id and teaching id
+            </summary>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:unismos.Services.Services.EnrollmentService.GetByStudentIdAsync(System.Guid)">
+            <summary>
+            get all enrollments for a given student
+            </summary>
+            <param name="studentId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:unismos.Services.Services.EnrollmentService.GetByTeachingIdAsync(System.Guid)">
+            <summary>
+            get all enrollments for a teaching
+            </summary>
+            <param name="teachingId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:unismos.Services.Services.EnrollmentService.GradeAsync(System.Guid,System.Int32)">
+            <summary>
+            validate parameter grade and update the enrollment accordingly
+            </summary>
+            <param name="id"></param>
+            <param name="grade"></param>
+            <returns></returns>
+        </member>
+        <member name="M:unismos.Services.Services.EnrollmentService.ReviewAsync(System.Guid,System.String)">
+            <summary>
+            validate review and update enrollment accordingly
+            </summary>
+            <param name="id"></param>
+            <param name="review"></param>
+            <returns></returns>
+        </member>
+        <member name="M:unismos.Services.Services.ProfessorService.AddAsync(unismos.Common.Dtos.NewProfessorDto)">
+            <summary>
+            validate username and add prof
+            </summary>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:unismos.Services.Services.ProfessorService.GetByIdAsync(System.Guid)">
+            <summary>
+            get prof by id
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:unismos.Services.Services.ProfessorService.GetAllAsync">
+            <summary>
+            get all profs from db
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:unismos.Services.Services.StudentService.GetByIdAsync(System.Guid)">
+            <summary>
+            get student by id
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:unismos.Services.Services.StudentService.AddAsync(unismos.Common.Dtos.NewStudentDto)">
+            <summary>
+            validate username and add student
+            </summary>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:unismos.Services.Services.SubjectService.AddAsync(unismos.Common.Dtos.NewSubjectDto)">
+            <summary>
+            add new subject
+            </summary>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:unismos.Services.Services.SubjectService.GetAllAsync">
+            <summary>
+            get all subjects
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:unismos.Services.Services.TeachingService.GetAllAsync">
+            <summary>
+            get all teachings
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:unismos.Services.Services.TeachingService.AddAsync(unismos.Common.Dtos.NewTeachingDto)">
+            <summary>
+            add new teaching if valid prof and subject are given
+            </summary>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:unismos.Services.Services.TeachingService.GetByProfessorIdAsync(System.Guid)">
+            <summary>
+            get all teachings for a prof
+            </summary>
+            <param name="professorId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:unismos.Services.Services.TeachingService.GetBySubjectIdAsync(System.Guid)">
+            <summary>
+            get all teachings for a student
+            </summary>
+            <param name="subjectId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:unismos.Services.Services.TeachingService.ScheduleExam(System.Guid,System.Int64)">
+            <summary>
+            change examDate for a teaching
+            </summary>
+            <param name="id"></param>
+            <param name="examDate"></param>
+            <returns></returns>
+        </member>
+        <member name="M:unismos.Services.Services.UserService.GetByIdAsync(System.Guid)">
+            <summary>
+            get userById
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:unismos.Services.Services.UserService.Authenticate(unismos.Common.Dtos.LoginUserDto)">
+            <summary>
+            verify credentials and return user data with jwt
+            </summary>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:unismos.Services.Services.UserService.GenerateJwtToken(unismos.Common.Dtos.UserDto)">
+            <summary>
+            generate jwt for given user
+            </summary>
+            <param name="user"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

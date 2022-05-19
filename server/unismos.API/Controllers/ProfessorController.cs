@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using unismos.Common.Extensions;
 using unismos.Common.ViewModels;
@@ -5,6 +6,7 @@ using unismos.Interfaces.IProfessor;
 
 namespace unismos.API.Controllers;
 
+[Authorize]
 [ApiController]
 [Route("/api/professors")]
 public class ProfessorController : ControllerBase
@@ -16,6 +18,7 @@ public class ProfessorController : ControllerBase
         _professorService = professorService;
     }
 
+    [Authorize(Roles = "secretary")]
     [HttpPost]
     public async Task<IActionResult> AddAsync([FromBody] NewProfessorViewModel model)
     {

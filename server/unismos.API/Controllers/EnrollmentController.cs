@@ -1,3 +1,5 @@
+using System.IdentityModel.Tokens.Jwt;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using unismos.Common.Extensions;
 using unismos.Common.ViewModels;
@@ -5,6 +7,7 @@ using unismos.Interfaces.IEnrollment;
 
 namespace unismos.API.Controllers;
 
+[Authorize]
 [ApiController]
 [Route("/api/enrollments")]
 public class EnrollmentController : ControllerBase
@@ -16,6 +19,7 @@ public class EnrollmentController : ControllerBase
         _enrollmentService = enrollmentService;
     }
 
+    [Authorize(Roles = "student")]
     [HttpPost]
     public async Task<IActionResult> AddAsync([FromBody] NewEnrollmentViewModel model)
     {
@@ -23,10 +27,15 @@ public class EnrollmentController : ControllerBase
         return enrollment is NullEnrollmentViewModel ? BadRequest() : Created("", enrollment);
     }
 
+    [Authorize(Roles = "student")]
     [HttpGet]
     [Route("student/{studentId}")]
     public async Task<IActionResult> GetByStudentIdAsync([FromRoute] Guid studentId)
     {
+        var userId = Guid.Parse(HttpContext.User.Claims.FirstOrDefault(e => e.Type == JwtRegisteredClaimNames.Jti)
+            ?.Value);
+        if (userId != studentId) return Forbid();
+        
         var enrollments = (await _enrollmentService.GetByStudentIdAsync(studentId)).Select(e => e.ToViewModel());
         return Ok(enrollments);
     }
@@ -39,14 +48,16 @@ public class EnrollmentController : ControllerBase
         return Ok(enrollments);
     }
 
+    [Authorize(Roles = "professor")]
     [HttpPut]
     [Route("grade/{id}")]
     public async Task<IActionResult> GradeEnrollment([FromRoute] Guid id, [FromBody] GradeViewModel model)
     {
-        var enrollment = (await _enrollmentService.GradeAsync(id, model.Grade )).ToViewModel();
+        var enrollment = (await _enrollmentService.GradeAsync(id, model.Grade)).ToViewModel();
         return enrollment is NullEnrollmentViewModel ? BadRequest() : Ok(enrollment);
     }
 
+    [Authorize(Roles = "student")]
     [HttpPut]
     [Route("review/{id}")]
     public async Task<IActionResult> GradeEnrollment([FromRoute] Guid id, [FromBody] ReviewViewModel model)

@@ -1,7 +1,6 @@
 using unismos.Common.Dtos;
 using unismos.Common.Entities;
 using unismos.Common.Extensions;
-using unismos.Common.ViewModels.Student;
 using unismos.Interfaces.IStudent;
 
 namespace unismos.Services.Services;

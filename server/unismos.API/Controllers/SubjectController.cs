@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.JsonWebTokens;
 using Serilog;
 using unismos.Common.Extensions;
 using unismos.Common.ViewModels;
@@ -7,7 +8,7 @@ using unismos.Interfaces.ISubject;
 
 namespace unismos.API.Controllers;
 
-[Authorize]
+// [Authorize]
 [ApiController]
 [Route("/api/subjects")]
 public class SubjectController : ControllerBase
@@ -26,12 +27,12 @@ public class SubjectController : ControllerBase
         return subject is NullSubjectViewModel ? BadRequest() : Created("", subject);
     }
 
-    // [Authorize]
+    [Authorize(Roles = "professor")]
     [HttpGet]
     public async Task<IActionResult> GetAllAsync()
     {
         var currentUser = HttpContext.User;
-        Console.WriteLine(currentUser.Claims);
+        Console.WriteLine(currentUser.Claims.FirstOrDefault(e => e.Type == JwtRegisteredClaimNames.Jti)?.Value);
         Log.Information("Hello, Serilog!");
         var subjects = await _subjectService.GetAllAsync();
         return Ok(subjects.Select(e => e.ToViewModel()).ToList());

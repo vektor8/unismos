@@ -32,6 +32,12 @@ public class EnrollmentService : IEnrollmentService
         var teaching = await _teachingRepository.GetByIdAsync(dto.TeachingId);
         if (teaching is NullTeaching) return new NullEnrollmentDto();
 
+        var enrollmentExists =
+            (await _enrollmentRepository.GetByStudentIdAsync(student.Id)).Any(e =>
+                e.Teaching.Subject.Id == teaching.Subject.Id);
+
+        if (enrollmentExists) return new NullEnrollmentDto();
+
         var entity = new Enrollment
         {
             Grade = 0,
@@ -52,7 +58,8 @@ public class EnrollmentService : IEnrollmentService
 
     public async Task<List<EnrollmentDto>> GetByTeachingIdAsync(Guid teachingId)
     {
-        var enrollments = (await _enrollmentRepository.GetByTeachingIdAsync(teachingId)).Select(e => e.ToDto()).ToList();
+        var enrollments = (await _enrollmentRepository.GetByTeachingIdAsync(teachingId)).Select(e => e.ToDto())
+            .ToList();
         return enrollments;
     }
 
@@ -67,6 +74,7 @@ public class EnrollmentService : IEnrollmentService
 
     public async Task<EnrollmentDto> ReviewAsync(Guid id, string review)
     {
+        if (string.IsNullOrWhiteSpace(review)) return new NullEnrollmentDto();
         var enrollment = await _enrollmentRepository.GetByIdAsync(id);
         if (enrollment is NullEnrollment || enrollment.Grade != 0) return new NullEnrollmentDto();
         enrollment.Review = review;

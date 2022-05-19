@@ -46,31 +46,18 @@ public class UserService : IUserService
         if (BCrypt.Net.BCrypt.Verify(dto.Password, user.Password) == false) return new NullLoggedInUserDto();
 
         var userDto = user.ToDto();
-
+        
         return new LoggedInUserDto
         {
+            Id = userDto.Id,
             FirstName = userDto.FirstName,
             LastName = userDto.LastName,
             Token = await GenerateJwtToken(userDto),
-            Username = userDto.Username
+            Username = userDto.Username,
+            Type = userDto.GetType().Name.ToLower()[..^3]
         };
     }
-
-    private UserDto ToDto(User entity)
-    {
-        switch (entity)
-        {
-            case Student student:
-                return student.ToDto();
-            case Professor professor:
-                return professor.ToDto();
-            case Secretary secretary:
-                return secretary.ToDto();
-        }
-
-        return new NullUserDto();
-    }
-
+    
     private async Task<string> GenerateJwtToken(UserDto user)
     {
         var claims = new[]

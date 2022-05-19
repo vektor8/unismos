@@ -31,9 +31,11 @@ public static class UserExtensions
         ? new NullLoggedInUserViewModel()
         : new LoggedInViewModel
         {
+            Id = dto.Id,
             FirstName = dto.FirstName,
             LastName = dto.LastName,
             Token = dto.Token,
-            Username = dto.Username
+            Username = dto.Username,
+            Type = dto.Type
         };
 }

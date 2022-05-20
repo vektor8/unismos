@@ -9,7 +9,9 @@ import {
     Typography,
 } from "@mui/material";
 import React from "react";
+import { useDispatch } from "react-redux";
 import { Axios } from "../../../api/api";
+import { addNewProfessor } from "../../../stores/secretary/slice";
 
 type Props = {
     isOpen: boolean;
@@ -20,6 +22,7 @@ type Props = {
 const ProfessorModal = (props: Props) => {
     const [openSnackBarSuccess, setOpenSnackBarSuccess] = React.useState(false);
     const [openSnackBarFail, setOpenSnackBarFail] = React.useState(false);
+    const dispatch = useDispatch();
     const submitProfessor = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
@@ -29,7 +32,7 @@ const ProfessorModal = (props: Props) => {
             username: data.get('username'),
             password: data.get('password')
         }).then((response) => {
-            console.log(response.data);
+            dispatch(addNewProfessor(response.data));
             setOpenSnackBarSuccess(true);
             props.onClose();
         }).catch(() => {

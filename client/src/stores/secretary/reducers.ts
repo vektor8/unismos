@@ -1,5 +1,5 @@
 import { PayloadAction } from "@reduxjs/toolkit";
-import { Teaching } from "../../model/teaching";
+import { SimpleUser, Subject, Teaching } from "../../model/teaching";
 import { SecretaryState } from "./state";
 
 export const refreshTeachingsCaseReducer = (
@@ -14,7 +14,6 @@ export const updateTeachingDateCaseReducer = (
     const teaching = state.teaching.find(t => t.id === action.payload.id);
     if (teaching)
         teaching.examDate = action.payload.date;
-    console.log("plm,", teaching);
 }
 
 export const addTeachingCaseReducer = (
@@ -22,3 +21,29 @@ export const addTeachingCaseReducer = (
 ) => {
     state.teaching.push(action.payload);
 };
+
+export const addNewProfessorCaseReducer = (
+    state: SecretaryState, action: PayloadAction<SimpleUser>
+) => {
+    state.professors.push(action.payload);
+}
+
+export const addNewSubjectCaseReducer = (
+    state: SecretaryState, action: PayloadAction<Subject>
+) => {
+    state.subjects.push(action.payload);
+}
+
+export const refreshProfessorsCaseReducer = (
+    state: SecretaryState, action: PayloadAction<SimpleUser[]>
+) => {
+    state.professors = action.payload;
+}
+
+export const refreshSubjectsCaseReducer = (
+    state: SecretaryState, action: PayloadAction<Subject[]>
+) => {
+    state.subjects = action.payload;
+}
+
+

@@ -16,13 +16,15 @@ export const addEnrollmentsToTeachingsCaseReducer = (
     state.enrollments[action.payload.id] = action.payload.enrollments;
 };
 
-export const updateEnrollmentGradeCaseReducer = (
-    state: ProfessorState, action: PayloadAction<{id : string, enrollmentId: string, grade: number }>
+export const updateEnrollmentCaseReducer = (
+    state: ProfessorState, action: PayloadAction<{ id: string, enrollmentId: string, enrollment: Enrollment }>
 ) => {
     const enrollments = state.enrollments[action.payload.id];
-    if(enrollments){
+    if (enrollments) {
         const enrollment = enrollments.find(e => e.id === action.payload.enrollmentId);
-        if(enrollment)
-            enrollment.grade = action.payload.grade;
+        if (enrollment) {
+            enrollment.grade = action.payload.enrollment.grade;
+            enrollment.review = action.payload.enrollment.review;
+        }
     }
 }

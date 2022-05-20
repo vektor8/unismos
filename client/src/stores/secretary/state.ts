@@ -1,9 +1,13 @@
-import { Teaching} from "../../model/teaching";
+import { SimpleUser, Subject, Teaching} from "../../model/teaching";
 
 export interface SecretaryState {
-    teaching: Teaching[]
+    teaching: Teaching[],
+    professors: SimpleUser[],
+    subjects: Subject[],
 }
 
 export const SecretaryInitialState: SecretaryState = {
-    teaching: []
+    teaching: [],
+    professors: [],
+    subjects: [],
 };

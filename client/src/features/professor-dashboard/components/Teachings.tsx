@@ -12,7 +12,7 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { Axios } from '../../../api/api';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../stores/store';
-import { addEnrollmentsToTeachings, updateEnrollmentGrade } from '../../../stores/professor/slice';
+import { addEnrollmentsToTeachings, updateEnrollment } from '../../../stores/professor/slice';
 import SaveIcon from '@mui/icons-material/Save';
 import ReviewModal from './ReviewModal';
 
@@ -20,16 +20,29 @@ function Student(props: { enrollment: Enrollment }) {
   const { enrollment } = props;
   const [grade, setGrade] = React.useState(enrollment.grade);
   const [openReviewModal, setOpenReviewModal] = React.useState(false);
+  const [openSnackBarSuccess, setOpenSnackBarSuccess] = React.useState(false);
+  const [openSnackBarFail, setOpenSnackBarFail] = React.useState(false);
   const dispatch = useDispatch();
 
   const submitGrade = () => {
     Axios.put(`enrollments/grade/${enrollment.id}`, { grade: grade }).then((resp) => {
+      setOpenSnackBarSuccess(true);
       const parsedResponse = resp.data as Enrollment;
-      dispatch(updateEnrollmentGrade({ id: parsedResponse.teaching.id, enrollmentId: parsedResponse.id, grade: parsedResponse.grade }))
-    });
+      dispatch(updateEnrollment({ id: parsedResponse.teaching.id, enrollmentId: parsedResponse.id, enrollment: parsedResponse }));
+    }).catch(err => setOpenSnackBarFail(true));
   }
 
   return (<>
+    <Snackbar open={openSnackBarSuccess} autoHideDuration={5000} onClose={() => setOpenSnackBarSuccess(false)}>
+      <Alert onClose={() => setOpenSnackBarSuccess(false)} severity="success" sx={{ width: '100%' }}>
+        Graded student successfully
+      </Alert>
+    </Snackbar>
+    <Snackbar open={openSnackBarFail} autoHideDuration={5000} onClose={() => setOpenSnackBarFail(false)}>
+      <Alert onClose={() => setOpenSnackBarFail(false)} severity="error" sx={{ width: '100%' }}>
+        Grade is not valid
+      </Alert>
+    </Snackbar>
     <ReviewModal
       isOpen={openReviewModal}
       onClose={() => setOpenReviewModal(false)}
@@ -118,24 +131,29 @@ function Row(props: { row: Teaching }) {
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box sx={{ margin: 1, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-              <Title>Students</Title>
-              <Table>
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Student</TableCell>
-                    <TableCell>Grade</TableCell>
-                    <TableCell>Review</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {enrollments !== undefined && enrollments.map((enrollment: Enrollment) => <Student enrollment={enrollment} />)}
-                </TableBody>
-              </Table>
+              {(enrollments !== undefined && enrollments.length > 0) ?
+                <>
+                  <Title>Students</Title>
+                  <Table>
+                    <TableHead>
+                      <TableRow>
+                        <TableCell>Student</TableCell>
+                        <TableCell>Grade</TableCell>
+                        <TableCell>Review</TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {enrollments.map((enrollment: Enrollment) => <Student enrollment={enrollment} />)}
+                    </TableBody>
+                  </Table>
+                </>
+                :
+                <Title>No students enrolled in this class</Title>}
             </Box>
           </Collapse>
         </TableCell>
       </TableRow>
-    </React.Fragment>
+    </React.Fragment >
   );
 }
 

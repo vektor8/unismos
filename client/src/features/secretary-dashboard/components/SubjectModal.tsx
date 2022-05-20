@@ -14,7 +14,9 @@ import {
     Typography,
 } from "@mui/material";
 import React from "react";
+import { useDispatch } from "react-redux";
 import { Axios } from "../../../api/api";
+import { addNewSubject } from "../../../stores/secretary/slice";
 
 type Props = {
     isOpen: boolean;
@@ -24,6 +26,7 @@ type Props = {
 
 const SubjectModal = (props: Props) => {
     const [openSnackBarSuccess, setOpenSnackBarSuccess] = React.useState(false);
+    const dispatch = useDispatch();
     const submitSubject = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
@@ -31,7 +34,7 @@ const SubjectModal = (props: Props) => {
             name: data.get('name'),
             description: data.get('description')
         }).then((response) => {
-            console.log(response.data);
+            dispatch(addNewSubject(response.data));
             props.onClose();
         }).catch(() => {
         })

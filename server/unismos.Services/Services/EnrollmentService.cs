@@ -98,6 +98,8 @@ public class EnrollmentService : IEnrollmentService
     {
         var enrollments = (await _enrollmentRepository.GetByTeachingIdAsync(teachingId)).Select(e => e.ToDto())
             .ToList();
+        enrollments.ForEach(e => e.Review = e.Grade > 0 ? e.Review : "");
+        
         Log.Information("Getting all enrollments by teaching {id}", teachingId);
         return enrollments;
     }

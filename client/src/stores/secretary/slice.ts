@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { addTeachingCaseReducer, refreshTeachingsCaseReducer, updateTeachingDateCaseReducer } from "./reducers";
+import { addNewProfessorCaseReducer, addNewSubjectCaseReducer, addTeachingCaseReducer, refreshProfessorsCaseReducer, refreshSubjectsCaseReducer, refreshTeachingsCaseReducer, updateTeachingDateCaseReducer } from "./reducers";
 import { SecretaryInitialState } from "./state";
 
 const SecretaryReducerSlice = createSlice({
@@ -9,8 +9,12 @@ const SecretaryReducerSlice = createSlice({
     refreshTeachings: refreshTeachingsCaseReducer,
     updateTeachingDate: updateTeachingDateCaseReducer,
     addNewTeaching: addTeachingCaseReducer,
+    addNewProfessor: addNewProfessorCaseReducer,
+    addNewSubject: addNewSubjectCaseReducer,
+    refreshProfessors: refreshProfessorsCaseReducer,
+    refreshSubjects: refreshSubjectsCaseReducer,
   },
 });
 
-export const { refreshTeachings, updateTeachingDate, addNewTeaching } = SecretaryReducerSlice.actions;
+export const { refreshTeachings, updateTeachingDate, addNewTeaching, addNewProfessor, addNewSubject, refreshProfessors, refreshSubjects } = SecretaryReducerSlice.actions;
 export const SecretaryReducer = SecretaryReducerSlice.reducer;

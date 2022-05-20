@@ -14,6 +14,7 @@ Log.Logger = new LoggerConfiguration()
 
 // Add services to the container.
 
+
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -60,11 +61,12 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseRouting();
 
 app.UseCors(x => x
     .AllowAnyOrigin()
-    .AllowAnyMethod()
-    .AllowAnyHeader());
+    .AllowAnyHeader()
+    .AllowAnyMethod());
 
 app.UseAuthentication();
 app.UseAuthorization();

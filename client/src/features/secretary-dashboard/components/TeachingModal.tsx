@@ -9,10 +9,11 @@ import {
     Typography,
 } from "@mui/material";
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Axios } from "../../../api/api";
 import { SimpleUser, Subject } from "../../../model/teaching";
-import { addNewTeaching } from "../../../stores/secretary/slice";
+import { addNewTeaching, refreshProfessors, refreshSubjects } from "../../../stores/secretary/slice";
+import { RootState } from "../../../stores/store";
 import Title from "./Title";
 
 type Props = {
@@ -23,19 +24,21 @@ type Props = {
 const TeachingModal = (props: Props) => {
     const [professorId, setProfessorId] = React.useState("");
     const [subjectId, setSubjectId] = React.useState("");
-    const [professors, setProfessors] = React.useState<SimpleUser[]>([]);
-    const [subjects, setSubjects] = React.useState<Subject[]>([]);
+    
+    const professors = useSelector((state: RootState) => state.secretary.professors);
+    const subjects = useSelector((state: RootState) => state.secretary.subjects);
+
     const [openSnackBarSuccess, setOpenSnackBarSuccess] = React.useState(false);
     const [openSnackBarFail, setOpenSnackBarFail] = React.useState(false);
     const dispatch = useDispatch();
 
     React.useEffect(() => {
         Axios.get("/professors").then(res => {
-            setProfessors(res.data);
+            dispatch(refreshProfessors(res.data));
             setProfessorId(professors[0].id);
         });
         Axios.get("/subjects").then(res => {
-            setSubjects(res.data);
+            dispatch(refreshSubjects(res.data));
             setSubjectId(subjects[0].id);
         });
     }, []);

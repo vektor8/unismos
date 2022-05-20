@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { addEnrollmentsToTeachingsCaseReducer, refreshTeachingsCaseReducer, updateEnrollmentGradeCaseReducer } from "./reducers";
+import { addEnrollmentsToTeachingsCaseReducer, refreshTeachingsCaseReducer, updateEnrollmentCaseReducer } from "./reducers";
 import { ProfessorInitialState } from "./state";
 
 const ProfessorReducerSlice = createSlice({
@@ -8,9 +8,9 @@ const ProfessorReducerSlice = createSlice({
   reducers: {
     refreshTeachings: refreshTeachingsCaseReducer,
     addEnrollmentsToTeachings: addEnrollmentsToTeachingsCaseReducer,
-    updateEnrollmentGrade : updateEnrollmentGradeCaseReducer
+    updateEnrollment : updateEnrollmentCaseReducer
   },
 });
 
-export const { refreshTeachings, addEnrollmentsToTeachings, updateEnrollmentGrade } = ProfessorReducerSlice.actions;
+export const { refreshTeachings, addEnrollmentsToTeachings, updateEnrollment } = ProfessorReducerSlice.actions;
 export const ProfessorReducer = ProfessorReducerSlice.reducer;
